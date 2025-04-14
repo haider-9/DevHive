@@ -1,0 +1,27 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env.local
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+
+# Other
+coverage
+
+# OAuth Google secret
+./google_client_secret.json
+
+# Next.js
+.next/
