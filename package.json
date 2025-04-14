@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/react": "^2.7.6",
     "@hookform/resolvers": "^3.10.0",
-    "@heroui/react": "2.7.6",
     "@tailwindcss/typography": "^0.5.16",
     "appwrite": "^14.0.1",
     "clsx": "^2.1.1",

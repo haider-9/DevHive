@@ -16,8 +16,9 @@ import { Avatar, Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import NavLink from "./NavLink";
-import { account } from "@/appwrite";
+import { account, storage } from "@/appwrite";
 import { cn } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 const sideLinks = [
   { name: "Home", icon: <FaHouse />, href: "/" },
@@ -30,61 +31,91 @@ const sideLinks = [
 
 const Sidebar = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [avatarUrl, setAvatarUrl] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    // First try to get user from cookie
-    try {
-      const cookieValue = document.cookie.replace(
-        /(?:(?:^|.*;\s*)user\s*\=\s*([^;]*).*$)|^.*$/,
-        "$1"
-      );
-
-      if (cookieValue) {
-        const userData = JSON.parse(cookieValue);
-        setUser(userData);
-      } else {
-        // If no cookie, try to get user from Appwrite session
-        fetchUserFromAppwrite();
-      }
-    } catch (error) {
-      console.error("Error parsing user cookie:", error);
-      // If error parsing cookie, try to get user from Appwrite session
-      fetchUserFromAppwrite();
-    }
+    fetchUserFromAppwrite();
   }, []);
 
   const fetchUserFromAppwrite = async () => {
     try {
+      setLoading(true);
       const userData = await account.get();
       setUser(userData);
 
-      // Set the cookie for future use
-      document.cookie = `user=${JSON.stringify(userData)}`;
+      // Get profile image if available
+      if (userData.prefs?.profileImage) {
+        // Use the profile image URL saved from edit profile
+        setAvatarUrl(userData.prefs.profileImage);
+      } else if (userData.prefs?.profileImageId) {
+        const imageUrl = storage.getFileView(
+          process.env.NEXT_PUBLIC_BUCKET_ID,
+          userData.prefs.profileImageId
+        ).href;
+        setAvatarUrl(imageUrl);
+      } else {
+        // Check for OAuth provider images
+        try {
+          const identities = await account.listIdentities();
+          
+          // Look for GitHub or Google identity
+          const githubIdentity = identities.find(identity => identity.provider === 'github');
+          const googleIdentity = identities.find(identity => identity.provider === 'google');
+          
+          if (githubIdentity) {
+            // For GitHub, we can construct the avatar URL
+            const githubId = githubIdentity.providerUserId;
+            setAvatarUrl(`https://avatars.githubusercontent.com/u/${githubId}`);
+          } 
+          else if (googleIdentity && googleIdentity.providerUserInfo?.picture) {
+            // For Google, the picture URL might be in the provider user info
+            setAvatarUrl(googleIdentity.providerUserInfo.picture);
+          }
+        } catch (error) {
+          console.error("Error fetching user identities:", error);
+        }
+      }
     } catch (error) {
       console.error("Error fetching user from Appwrite:", error);
-      // If we can't get the user from Appwrite, redirect to login
-      router.push("/signin");
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLogout = async () => {
     try {
-      // Delete the Appwrite session
       await account.deleteSession("current");
-
-      // Clear the cookie
-      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-      console.log("User logged out");
+      toast.success("User logged out");
       setUser(null);
       router.push("/signin");
     } catch (error) {
-      console.error("Logout failed", error);
-      // Even if the session deletion fails, still try to redirect
-      router.push("/signin");
+      toast.error("Logout failed");
+      console.error("Logout error:", error);
     }
   };
+
+  if (loading) {
+    return (
+      <aside className="pb-8 text-foreground h-screen fixed top-6 left-6 w-20 lg:w-80 flex flex-col transition-all duration-300">
+        <div className="flex-1 flex flex-col overflow-y-auto space-y-4">
+          <div className="bg-secondary shadow-lg rounded-2xl p-4 lg:p-6 flex flex-col items-center gap-6">
+            <div className="animate-pulse w-full">
+              <div className="flex items-center justify-center lg:justify-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-gray-300"></div>
+                <div className="hidden lg:block w-full">
+                  <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    );
+  }
 
   return (
     <aside
@@ -98,11 +129,7 @@ const Sidebar = () => {
           <Link href="/profile" className="w-full">
             <div className="flex items-center justify-center lg:justify-start gap-4">
               <Avatar
-                src={
-                  user?.avatarUrl || user?.prefs?.profileImageId
-                    ? `${process.env.NEXT_PUBLIC_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_BUCKET_ID}/files/${user.prefs.profileImageId}/view?project=${process.env.NEXT_PUBLIC_PROJECT_ID}`
-                    : "https://i.pravatar.cc/150?u=a042581f4e29026024d"
-                }
+                src={avatarUrl || "https://preview.redd.it/anyone-know-where-the-hell-this-image-of-vegeta-is-from-v0-xvpfgi2pfgra1.jpg?width=1080&crop=smart&auto=webp&s=78f4afefe709a809e6a3a2a381e7d99895c911e3"}
                 size="lg"
                 radius="full"
                 isBordered
@@ -110,10 +137,10 @@ const Sidebar = () => {
               />
               <div className="hidden lg:block overflow-hidden">
                 <div className="font-semibold text-lg text-warning truncate">
-                  {user?.name}
+                  {user?.name || "User"}
                 </div>
                 <div className="text-sm text-neutral-400 truncate">
-                  {user?.email}
+                  {user?.email || ""}
                 </div>
               </div>
             </div>

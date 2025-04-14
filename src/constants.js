@@ -61,8 +61,8 @@ export const TEAM_MEMBERS = [
       about: 'Experienced full-stack developer with a passion for creating efficient, scalable web applications. Specializes in modern JavaScript frameworks and cloud technologies.',
       linkedin: 'https://www.linkedin.com/in/sharoon-shaleem-0a7a85226/',
       github: 'https://github.com/Sharoon-Shaleem',
-      portfolio: '/nowhere',
-      image: '/images/sharoon.png',
+      portfolio: 'https://sharoon.vercel.app',
+      image: 'https://github.com/Sharoon-Shaleem.png',
       skills: [
         { name: 'MongoDB', Icon: <SiMongodb className="text-green-500" /> },
         { name: 'Express', Icon: <SiExpress className="text-foreground" /> },
@@ -78,7 +78,7 @@ export const TEAM_MEMBERS = [
       linkedin: 'https://www.linkedin.com/in/raja-zubair-664066294',
       github: 'https://github.com/RajaZubair573',
       portfolio: 'https://rajazubair.vercel.app/',
-      image: '/images/zubair.webp',
+      image: 'https://github.com/RajaZubair573.png',
       skills: [
         { name: 'Figma', Icon: <LuFigma className="text-foreground " /> },
         { name: 'UI Design', Icon: <MdDesignServices className="text-info" /> },
@@ -94,7 +94,7 @@ export const TEAM_MEMBERS = [
       linkedin: 'https://www.linkedin.com/in/haider-ahmad-439317164/',
       github: 'https://github.com/haider-9',
       portfolio: 'https://haiderahmad.vercel.app/',
-      image: '/images/haider (1).jpg',
+      image: 'https://github.com/haider-9.png',
       skills: [
         { name: 'MongoDB', Icon: <SiMongodb className="text-green-500" /> },
         { name: 'Express', Icon: <SiExpress className="text-foreground" /> },

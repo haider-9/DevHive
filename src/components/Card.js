@@ -1,6 +1,6 @@
-'use client';
-import Link from 'next/link';
-import { useState } from 'react';
+"use client";
+import Link from "next/link";
+import { useState } from "react";
 import {
   LuBookmark,
   LuMessageSquare,
@@ -9,7 +9,7 @@ import {
   LuArrowDown,
   LuFlag,
   LuShare2,
-} from 'react-icons/lu';
+} from "react-icons/lu";
 import {
   Card,
   CardHeader,
@@ -36,6 +36,7 @@ const PostCard = ({
   postImage,
   createdAt,
   likeCount,
+  postId,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
@@ -62,13 +63,13 @@ const PostCard = ({
       <CardHeader className="justify-between p-4">
         <div className="flex gap-3">
           <Link
-            href={`/profile/${username.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`/profile/${username.toLowerCase().replace(/\s+/g, "-")}`}
           >
             <Avatar src={profileImage} alt={username} size="sm" />
           </Link>
           <div className="flex flex-col items-start justify-center">
             <Link
-              href={`/profile/${username.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`/profile/${username.toLowerCase().replace(/\s+/g, "-")}`}
             >
               <h4 className="text-small font-semibold leading-none text-default-600 hover:underline">
                 {username}
@@ -98,7 +99,7 @@ const PostCard = ({
         </Dropdown>
       </CardHeader>
       <CardBody className="px-4 py-2 text-small text-default-400">
-        <Link href={`/post/${postHeading.toLowerCase().replace(/\s+/g, '-')}`}>
+        <Link href={`/post/${postId}`}>
           <h2 className="text-large font-bold text-default-600 transition-colors hover:text-primary-100">
             {postHeading}
           </h2>
@@ -108,7 +109,7 @@ const PostCard = ({
           {hashtags.map((tag, index) => (
             <Link
               key={index}
-              href={`/hashtag/${tag.toLowerCase().replace(/\s+/g, '-')}`}
+              href={`/hashtag/${tag.toLowerCase().replace(/\s+/g, "-")}`}
             >
               <Chip
                 color="warning"
@@ -121,7 +122,7 @@ const PostCard = ({
             </Link>
           ))}
         </div>
-        <Image
+        <img
           removeWrapper
           alt="Post image"
           className="z-0 mt-2 max-h-60 w-full object-cover"
@@ -131,8 +132,8 @@ const PostCard = ({
       <CardFooter className="flex justify-between gap-3 p-4">
         <ButtonGroup>
           <Button
-            color={isLiked ? 'success' : 'default'}
-            variant={isLiked ? 'solid' : 'flat'}
+            color={isLiked ? "success" : "default"}
+            variant={isLiked ? "solid" : "flat"}
             aria-label="Like"
             onClick={handleLike}
             disableRipple
@@ -141,7 +142,7 @@ const PostCard = ({
             <span className="ml-1">{likeCount}</span>
           </Button>
           <Button
-            color={isDisliked ? 'danger' : 'default'}
+            color={isDisliked ? "danger" : "default"}
             variant="flat"
             aria-label="Dislike"
             onClick={handleDislike}
@@ -152,7 +153,7 @@ const PostCard = ({
           </Button>
         </ButtonGroup>
         <div className="flex items-center gap-2">
-          <Tooltip content="Comment" className='text-foreground'>
+          <Tooltip content="Comment" className="text-foreground">
             <Button
               isIconOnly
               color="default"
@@ -166,26 +167,27 @@ const PostCard = ({
           </Tooltip>
           <Tooltip
             content={
-              isBookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'
-            } className='text-foreground'
+              isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"
+            }
+            className="text-foreground"
           >
             <Button
               isIconOnly
-              color={isBookmarked ? 'warning' : 'default'}
-              variant={isBookmarked ? 'solid' : 'light'}
+              color={isBookmarked ? "warning" : "default"}
+              variant={isBookmarked ? "solid" : "light"}
               size="sm"
               aria-label={
-                isBookmarked ? 'Remove from bookmarks' : 'Add to bookmarks'
+                isBookmarked ? "Remove from bookmarks" : "Add to bookmarks"
               }
               onClick={handleBookmark}
-              className={isBookmarked ? '' : 'hover:bg-default-100'}
+              className={isBookmarked ? "" : "hover:bg-default-100"}
             >
               <LuBookmark
-                className={isBookmarked ? 'text-white' : 'text-foreground'}
+                className={isBookmarked ? "text-white" : "text-foreground"}
               />
             </Button>
           </Tooltip>
-          <Tooltip content="Share this post" className='text-foreground'>
+          <Tooltip content="Share this post" className="text-foreground">
             <Button
               isIconOnly
               color="default"
