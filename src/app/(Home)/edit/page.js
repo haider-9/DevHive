@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { account, storage, ID } from "@/appwrite";
 import Image from "next/image";
 import { toast, Toaster } from "react-hot-toast";
+import { Spinner } from "@heroui/react";
 
 const BUCKET_ID = process.env.NEXT_PUBLIC_BUCKET_ID;
 
@@ -52,8 +53,8 @@ export default function EditProfile() {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        toast.error("Failed to load profile data");
-        router.push("/login");
+        toast.error("Please Log in to EditProfile");
+        router.push("/signin");
       }
     };
 
@@ -161,18 +162,17 @@ export default function EditProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-e0e1dd bg-[#0d1b2a]">
-        Loading...
-      </div>
+      <div className="flex justify-center items-center h-64">
+      <Spinner size="lg" color="warning" />
+    </div>
     );
   }
 
   return (
-    <div className="min-h-screen  text-[#e0e1dd]">
-      <Toaster position="top-center" />
+    <div className="min-h-screen bg-primary text-foreground">
       <div className="max-w-4xl mx-auto pb-12">
         {/* Cover Photo Section */}
-        <div className="relative h-48 bg-[#1b263b] rounded-t-lg overflow-hidden">
+        <div className="relative h-48 bg-secondary rounded-t-lg overflow-hidden">
           {coverPreview || profileData.coverImage ? (
             <img
               src={coverPreview || profileData.coverImage}
@@ -181,14 +181,14 @@ export default function EditProfile() {
               className="object-cover"
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1b263b] to-[#415a77] flex items-center justify-center">
-              <span className="text-[#e0e1dd] text-lg font-medium">
+            <div className="absolute inset-0 bg-gradient-to-r from-warning to-danger flex items-center justify-center">
+              <span className="text-foreground text-lg font-medium">
                 Add a cover photo
               </span>
             </div>
           )}
 
-          <label className="absolute bottom-4 right-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-[#e0e1dd] bg-black bg-opacity-50 hover:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#415a77] cursor-pointer">
+          <label className="absolute bottom-4 right-4 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-foreground bg-black bg-opacity-50 hover:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning cursor-pointer">
             <svg
               className="-ml-1 mr-2 h-4 w-4"
               fill="currentColor"
@@ -211,11 +211,11 @@ export default function EditProfile() {
         </div>
 
         {/* Profile Content */}
-        <div className="bg-[#1b263b] shadow rounded-b-lg">
+        <div className="bg-secondary shadow rounded-b-lg">
           {/* Profile Picture */}
           <div className="px-6">
             <div className="flex -mt-16 mb-4">
-              <div className="relative h-32 w-32 rounded-full border-4 border-[#0d1b2a] bg-[#1b263b] shadow-lg">
+              <div className="relative h-32 w-32 rounded-full border-4 border-primary bg-secondary shadow-lg">
                 {imagePreview || profileData.profileImage ? (
                   <img
                     src={imagePreview || profileData.profileImage}
@@ -224,15 +224,15 @@ export default function EditProfile() {
                     className="object-cover rounded-full"
                   />
                 ) : (
-                  <div className="h-full w-full rounded-full bg-[#415a77] flex items-center justify-center">
-                    <span className="text-[#e0e1dd] font-medium text-4xl">
+                  <div className="h-full w-full rounded-full bg-warning flex items-center justify-center">
+                    <span className="text-foreground font-medium text-4xl">
                       {profileData.name?.charAt(0) || "U"}
                     </span>
                   </div>
                 )}
-                <label className="absolute bottom-0 right-0 bg-[#0d1b2a] p-2 rounded-full shadow-md border border-[#415a77] cursor-pointer hover:bg-[#1b263b]">
+                <label className="absolute bottom-0 right-0 bg-primary p-2 rounded-full shadow-md border border-warning cursor-pointer hover:bg-secondary">
                   <svg
-                    className="h-5 w-5 text-[#e0e1dd]"
+                    className="h-5 w-5 text-foreground"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -254,15 +254,18 @@ export default function EditProfile() {
           </div>
 
           {/* Form Sections */}
-          <form onSubmit={handleSubmit} className="divide-y divide-[#415a77]">
+          <form
+            onSubmit={handleSubmit}
+            className="divide-y divide-foreground-500"
+          >
             {/* Basic Info */}
             <div className="px-6 py-5">
-              <h2 className="text-lg font-medium text-[#e0e1dd] mb-4">
+              <h2 className="text-lg font-medium text-foreground mb-4">
                 Basic Information
               </h2>
               <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                 <div className="sm:col-span-6">
-                  <label className="block text-sm font-medium text-[#e0e1dd]">
+                  <label className="block text-sm font-medium text-foreground">
                     Full name
                   </label>
                   <input
@@ -270,13 +273,13 @@ export default function EditProfile() {
                     name="name"
                     value={profileData.name}
                     onChange={handleChange}
-                    className="mt-1 block w-full border border-[#415a77] rounded-md shadow-sm py-2 px-3 bg-[#0d1b2a] text-[#e0e1dd] focus:outline-none focus:ring-[#778da9] focus:border-[#778da9] sm:text-sm"
+                    className="mt-1 block w-full border border-foreground-500 rounded-md shadow-sm py-2 px-3 bg-primary text-foreground focus:outline-none focus:ring-warning focus:border-warning sm:text-sm"
                     required
                   />
                 </div>
 
                 <div className="sm:col-span-6">
-                  <label className="block text-sm font-medium text-[#e0e1dd]">
+                  <label className="block text-sm font-medium text-foreground">
                     Bio
                   </label>
                   <textarea
@@ -284,7 +287,7 @@ export default function EditProfile() {
                     value={profileData.bio}
                     onChange={handleChange}
                     rows={3}
-                    className="mt-1 block w-full border border-[#415a77] rounded-md shadow-sm py-2 px-3 bg-[#0d1b2a] text-[#e0e1dd] focus:outline-none focus:ring-[#778da9] focus:border-[#778da9] sm:text-sm"
+                    className="mt-1 block w-full border border-foreground-500 rounded-md shadow-sm py-2 px-3 bg-primary text-foreground focus:outline-none focus:ring-warning focus:border-warning sm:text-sm"
                     placeholder="Tell us about yourself..."
                   />
                 </div>
@@ -293,20 +296,20 @@ export default function EditProfile() {
 
             {/* Skills */}
             <div className="px-6 py-5">
-              <h2 className="text-lg font-medium text-[#e0e1dd] mb-4">
+              <h2 className="text-lg font-medium text-foreground mb-4">
                 Skills
               </h2>
               <div className="flex flex-wrap gap-2 mb-4">
                 {profileData.skills.map((skill, index) => (
                   <span
                     key={index}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#415a77] text-[#e0e1dd]"
+                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-warning text-foreground"
                   >
                     {skill}
                     <button
                       type="button"
                       onClick={() => removeSkill(skill)}
-                      className="ml-1.5 inline-flex items-center justify-center h-4 w-4 rounded-full text-[#e0e1dd] hover:bg-[#778da9] hover:text-[#0d1b2a] focus:outline-none"
+                      className="ml-1.5 inline-flex items-center justify-center h-4 w-4 rounded-full text-foreground hover:bg-danger hover:text-foreground focus:outline-none"
                     >
                       <span className="sr-only">Remove skill</span>
                       <svg
@@ -336,13 +339,13 @@ export default function EditProfile() {
                       addSkill();
                     }
                   }}
-                  className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md border border-[#415a77] bg-[#0d1b2a] text-[#e0e1dd] focus:outline-none focus:ring-[#778da9] focus:border-[#778da9] sm:text-sm"
+                  className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md border border-foreground-500 bg-primary text-foreground focus:outline-none focus:ring-warning focus:border-warning sm:text-sm"
                   placeholder="Add a skill"
                 />
                 <button
                   type="button"
                   onClick={addSkill}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-r-md shadow-sm text-[#e0e1dd] bg-[#415a77] hover:bg-[#778da9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#778da9]"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-r-md shadow-sm text-foreground bg-warning hover:bg-danger focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning"
                 >
                   Add
                 </button>
@@ -351,16 +354,16 @@ export default function EditProfile() {
 
             {/* Social Links */}
             <div className="px-6 py-5">
-              <h2 className="text-lg font-medium text-[#e0e1dd] mb-4">
+              <h2 className="text-lg font-medium text-foreground mb-4">
                 Social Links
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#e0e1dd]">
+                  <label className="block text-sm font-medium text-foreground">
                     GitHub
                   </label>
                   <div className="mt-1 flex rounded-md shadow-sm">
-                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-[#415a77] bg-[#1b263b] text-[#778da9] sm:text-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-foreground-500 bg-secondary text-foreground-500 sm:text-sm">
                       github.com/
                     </span>
                     <input
@@ -376,18 +379,18 @@ export default function EditProfile() {
                           github: `https://github.com/${e.target.value}`,
                         })
                       }
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-[#415a77] bg-[#0d1b2a] text-[#e0e1dd] focus:outline-none focus:ring-[#778da9] focus:border-[#778da9] sm:text-sm"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-foreground-500 bg-primary text-foreground focus:outline-none focus:ring-warning focus:border-warning sm:text-sm"
                       placeholder="username"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[#e0e1dd]">
+                  <label className="block text-sm font-medium text-foreground">
                     LinkedIn
                   </label>
                   <div className="mt-1 flex rounded-md shadow-sm">
-                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-[#415a77] bg-[#1b263b] text-[#778da9] sm:text-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-foreground-500 bg-secondary text-foreground-500 sm:text-sm">
                       linkedin.com/in/
                     </span>
                     <input
@@ -403,14 +406,14 @@ export default function EditProfile() {
                           linkedin: `https://linkedin.com/in/${e.target.value}`,
                         })
                       }
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-[#415a77] bg-[#0d1b2a] text-[#e0e1dd] focus:outline-none focus:ring-[#778da9] focus:border-[#778da9] sm:text-sm"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-foreground-500 bg-primary text-foreground focus:outline-none focus:ring-warning focus:border-warning sm:text-sm"
                       placeholder="username"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[#e0e1dd]">
+                  <label className="block text-sm font-medium text-foreground">
                     Website
                   </label>
                   <input
@@ -418,7 +421,7 @@ export default function EditProfile() {
                     name="website"
                     value={profileData.website}
                     onChange={handleChange}
-                    className="mt-1 block w-full border border-[#415a77] rounded-md shadow-sm py-2 px-3 bg-[#0d1b2a] text-[#e0e1dd] focus:outline-none focus:ring-[#778da9] focus:border-[#778da9] sm:text-sm"
+                    className="mt-1 block w-full border border-foreground-500 rounded-md shadow-sm py-2 px-3 bg-primary text-foreground focus:outline-none focus:ring-warning focus:border-warning sm:text-sm"
                     placeholder="https://example.com"
                   />
                 </div>
@@ -426,23 +429,23 @@ export default function EditProfile() {
             </div>
 
             {/* Form Actions */}
-            <div className="px-6 py-4 bg-[#1b263b] text-right">
+            <div className="px-6 py-4 bg-secondary text-right">
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="bg-[#0d1b2a] py-2 px-4 border border-[#415a77] rounded-md shadow-sm text-sm font-medium text-[#e0e1dd] hover:bg-[#1b263b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#778da9]"
+                className="bg-primary py-2 px-4 border border-foreground-500 rounded-md shadow-sm text-sm font-medium text-foreground hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-[#e0e1dd] bg-[#415a77] hover:bg-[#778da9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#778da9] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-foreground bg-warning hover:bg-danger focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-warning disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {saving ? (
                   <>
                     <svg
-                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-[#e0e1dd]"
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-foreground"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"

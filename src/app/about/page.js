@@ -1,5 +1,6 @@
 import TeamMemberProfile from '@/components/about-page/TeamMemberProfile';
 import { TEAM_MEMBERS, TECHNOLOGIES_USED } from '@/constants';
+import Link from 'next/link';
 
 
 
@@ -7,6 +8,14 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen px-14 py-10 bg-gradient-to-b from-background to-secondary/10">
       <div className="container mx-auto px-4 py-16 space-y-8 text-foreground">
+        <div className="flex justify-between items-center mb-6">
+          <Link href="/" className="text-warning hover:text-warning/80 transition-colors">
+            ← Back to Home
+          </Link>
+          <Link href="/signin" className="text-warning hover:text-warning/80 transition-colors">
+            Sign In →
+          </Link>
+        </div>
         <div className="space-y-2">
           <h2 className="text-4xl font-bold text-warning">Our Mission</h2>
           <p className='text-lg leading-relaxed text-balance max-w-3xl'>

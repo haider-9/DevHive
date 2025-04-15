@@ -60,9 +60,9 @@ export const TEAM_MEMBERS = [
       role: 'Full Stack Developer',
       about: 'Experienced full-stack developer with a passion for creating efficient, scalable web applications. Specializes in modern JavaScript frameworks and cloud technologies.',
       linkedin: 'https://www.linkedin.com/in/sharoon-shaleem-0a7a85226/',
-      github: 'https://github.com/Sharoon-Shaleem',
+      github: 'https://github.com/Sharoon166',
       portfolio: 'https://sharoon.vercel.app',
-      image: 'https://github.com/Sharoon-Shaleem.png',
+      image: 'https://github.com/Sharoon166.png',
       skills: [
         { name: 'MongoDB', Icon: <SiMongodb className="text-green-500" /> },
         { name: 'Express', Icon: <SiExpress className="text-foreground" /> },

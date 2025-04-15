@@ -1,7 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { LuTwitter, LuLinkedin, LuGithub, LuCamera } from "react-icons/lu";
-import { Card, CardBody, Avatar, Button } from "@heroui/react";
+import {
+  LuTwitter,
+  LuLinkedin,
+  LuGithub,
+  LuCamera,
+  LuGlobe,
+} from "react-icons/lu";
+import { Card, CardBody, Avatar, Button, Spinner } from "@heroui/react";
 import Link from "next/link";
 import PostCard from "@/components/Card";
 import {
@@ -101,11 +107,22 @@ const ProfilePage = () => {
     }
   };
 
+  // Format date for member since display
+  const formatMemberSince = (dateString) => {
+    if (!dateString) return "Unknown";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-warning"></div>
-      </div>
+      <div className="flex justify-center items-center h-64">
+      <Spinner size="lg" color="warning" />
+    </div>
     );
   }
 
@@ -166,8 +183,11 @@ const ProfilePage = () => {
                     <p className="text-foreground-500">
                       {user?.prefs?.role || "Developer"}
                     </p>
+                    <p className="text-sm text-foreground-400 mt-1">
+                      Member since {formatMemberSince(user?.$createdAt)}
+                    </p>
                   </div>
-                  <Link href="/editprofile">
+                  <Link href="/edit">
                     <Button
                       color="warning"
                       variant="flat"
@@ -181,6 +201,16 @@ const ProfilePage = () => {
                   {user?.prefs?.bio || "No bio available"}
                 </p>
                 <div className="mt-4 flex flex-wrap justify-center gap-4 md:justify-start">
+                  {user?.prefs?.website && (
+                    <Link
+                      href={user.prefs.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full bg-secondary-100 p-2 text-foreground-500 shadow-md transition-all duration-300 hover:bg-primary hover:text-white"
+                    >
+                      <LuGlobe size={20} />
+                    </Link>
+                  )}
                   {user?.prefs?.twitter && (
                     <Link
                       href={user.prefs.twitter}

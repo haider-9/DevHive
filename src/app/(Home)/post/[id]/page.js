@@ -161,7 +161,6 @@ export default function PostDetailPage({ params }) {
 
   return (
     <div className="min-h-screen bg-primary py-8">
-      <Toaster position="top-center" />
       <Card className="max-w-3xl mx-auto shadow-lg">
         <CardBody className="p-8">
           <div className="space-y-6">

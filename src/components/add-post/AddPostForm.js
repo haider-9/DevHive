@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { account, databases, storage, ID, DATABASE_ID, POST_COLLECTION_ID } from "@/appwrite";
 import { toast, Toaster } from "react-hot-toast";
+import { Spinner } from "@heroui/react";
 
 const AddPostForm = () => {
   const router = useRouter();
@@ -133,9 +134,9 @@ const AddPostForm = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-40">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-warning"></div>
-      </div>
+      <div className="flex justify-center items-center h-64">
+      <Spinner size="lg" color="warning" />
+    </div>
     );
   }
 

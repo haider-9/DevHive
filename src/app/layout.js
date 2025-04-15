@@ -3,7 +3,6 @@ import "@/app/globals.css";
 import { UIProvider } from "@/providers/NextUIProvider";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"] });
 const recursive = Recursive({ subsets: ["latin"] });
 
 export const metadata = {
