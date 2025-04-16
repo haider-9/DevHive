@@ -60,7 +60,7 @@ const FeedSection = () => {
 
   return (
     <section>
-      <div className="flex items-center flex-col gap-4 md:gap-0 lg:flex-row">
+      <div className="flex items-center flex-col gap-4 flex-wrap lg:flex-row">
         {posts.map((post) => (
           <Card
             key={post.$id}
