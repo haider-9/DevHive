@@ -36,7 +36,7 @@ const ProfilePage = () => {
         setLoading(true);
         const userData = await account.get();
         setUser(userData);
-        console.log("User data:", userData); // Debug log
+        
 
         // Handle profile image
         if (userData.prefs?.profileImage) {

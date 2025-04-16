@@ -2,8 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Body Styles */
 body {
-    background-color: #0d1b2a;
-    color: #e0e1dd;
+    background-color: theme('colors.background');
+    color: theme('colors.foreground');
+}
+
+/* Selection Styles */
+::selection {
+    background-color: theme('colors.primary');
+    color: theme('colors.foreground');
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: theme('colors.background');
+}
+
+::-webkit-scrollbar-thumb {
+    background: theme('colors.secondary');
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.primary');
 }
