@@ -223,11 +223,11 @@ export default function CommunitiesPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="max-w-6xl mx-auto px-4 py-4 sm:py-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
         <div className="flex items-center gap-3">
-          <LuUsers className="text-warning text-3xl" />
-          <h1 className="text-3xl font-bold">Communities</h1>
+          <LuUsers className="text-warning text-2xl sm:text-3xl" />
+          <h1 className="text-2xl sm:text-3xl font-bold">Communities</h1>
         </div>
 
         <Button
@@ -235,6 +235,8 @@ export default function CommunitiesPage() {
           startContent={<LuPlus />}
           as={Link}
           href="/communities/create"
+          size="sm"
+          className="w-full sm:w-auto"
         >
           Create Community
         </Button>
@@ -243,7 +245,7 @@ export default function CommunitiesPage() {
       <Tabs
         selectedKey={selectedTab}
         onSelectionChange={setSelectedTab}
-        className="mb-6"
+        className="mb-4 sm:mb-6"
       >
         <Tab key="discover" title="Discover" />
         <Tab key="joined" title="Joined" />
@@ -251,7 +253,7 @@ export default function CommunitiesPage() {
       </Tabs>
 
       {selectedTab !== "events" && (
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <Input
             placeholder="Search communities..."
             value={searchQuery}
@@ -265,12 +267,12 @@ export default function CommunitiesPage() {
       )}
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
+        <div className="flex justify-center items-center h-48 sm:h-64">
           <Spinner size="lg" color="warning" />
         </div>
       ) : selectedTab === "events" ? (
         // Events tab content
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {events.length > 0 ? (
             events.map((event) => (
               <Card
@@ -279,8 +281,8 @@ export default function CommunitiesPage() {
               >
                 <CardHeader className="flex gap-3">
                   <div className="flex flex-col">
-                    <p className="text-md font-semibold">{event.title}</p>
-                    <p className="text-small text-default-500">
+                    <p className="text-sm sm:text-md font-semibold">{event.title}</p>
+                    <p className="text-xs sm:text-small text-default-500">
                       by {event.community}
                     </p>
                   </div>
@@ -289,32 +291,32 @@ export default function CommunitiesPage() {
                 <CardBody>
                   <div className="flex items-center gap-2 mb-2">
                     <LuCalendar className="text-warning" />
-                    <span>{formatEventDate(event.date)}</span>
+                    <span className="text-sm">{formatEventDate(event.date)}</span>
                   </div>
                   <div className="flex items-center gap-2 mb-2">
                     <LuUsers className="text-warning" />
-                    <span>{event.attendees} attending</span>
+                    <span className="text-sm">{event.attendees} attending</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <LuGlobe className="text-warning" />
-                    <span>
+                    <span className="text-sm">
                       {event.isOnline ? "Online Event" : "In-person Event"}
                     </span>
                   </div>
                 </CardBody>
                 <Divider />
                 <CardFooter>
-                  <Button color="warning" variant="flat" fullWidth>
+                  <Button color="warning" variant="flat" fullWidth size="sm">
                     RSVP
                   </Button>
                 </CardFooter>
               </Card>
             ))
           ) : (
-            <div className="col-span-full text-center py-16">
-              <LuCalendar className="text-warning text-4xl mx-auto mb-4 opacity-50" />
-              <h2 className="text-xl font-semibold mb-2">No upcoming events</h2>
-              <p className="text-default-500">
+            <div className="col-span-full text-center py-12 sm:py-16">
+              <LuCalendar className="text-warning text-3xl sm:text-4xl mx-auto mb-4 opacity-50" />
+              <h2 className="text-lg sm:text-xl font-semibold mb-2">No upcoming events</h2>
+              <p className="text-sm text-default-500">
                 Check back later for new community events
               </p>
             </div>
@@ -322,17 +324,17 @@ export default function CommunitiesPage() {
         </div>
       ) : filteredCommunities.length > 0 ? (
         // Communities grid
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredCommunities.map((community) => (
             <Card
               key={community.id}
               className="shadow-md hover:shadow-lg transition-shadow"
             >
               <CardHeader className="flex gap-3">
-                <Avatar src={community.logo} size="lg" radius="lg" />
+                <Avatar src={community.logo} size="md" className="sm:size-lg" radius="lg" />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1">
-                    <p className="text-md font-semibold">{community.name}</p>
+                    <p className="text-sm sm:text-md font-semibold">{community.name}</p>
                     {community.isVerified && (
                       <LuShield
                         className="text-warning"
@@ -341,11 +343,11 @@ export default function CommunitiesPage() {
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <p className="text-small text-default-500">
+                    <p className="text-xs sm:text-small text-default-500">
                       {community.members.toLocaleString()} members
                     </p>
-                    <span className="text-small text-default-500">•</span>
-                    <p className="text-small text-default-500">
+                    <span className="text-xs sm:text-small text-default-500">•</span>
+                    <p className="text-xs sm:text-small text-default-500">
                       {community.posts.toLocaleString()} posts
                     </p>
                   </div>
@@ -353,19 +355,19 @@ export default function CommunitiesPage() {
               </CardHeader>
               <Divider />
               <CardBody>
-                <p className="text-sm">{community.description}</p>
-                <div className="flex flex-wrap gap-2 mt-4">
+                <p className="text-xs sm:text-sm">{community.description}</p>
+                <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
                   {community.tags.map((tag) => (
                     <Chip key={tag} size="sm" variant="flat">
                       {tag}
                     </Chip>
                   ))}
                 </div>
-                <div className="flex items-center gap-2 mt-4">
+                <div className="flex items-center gap-2 mt-3 sm:mt-4">
                   <LuTrendingUp
                     className={`${community.activity === "Very Active" ? "text-success" : community.activity === "Active" ? "text-warning" : "text-default-500"}`}
                   />
-                  <span className="text-sm text-default-500">
+                  <span className="text-xs sm:text-sm text-default-500">
                     {community.activity} • {community.lastActive}
                   </span>
                 </div>
@@ -379,6 +381,7 @@ export default function CommunitiesPage() {
                     community.isJoined ? <LuMessageSquare /> : <LuUserPlus />
                   }
                   fullWidth
+                  size="sm"
                 >
                   {community.isJoined ? "View Discussions" : "Join Community"}
                 </Button>
@@ -388,10 +391,10 @@ export default function CommunitiesPage() {
         </div>
       ) : (
         // No communities found
-        <div className="text-center py-16">
-          <LuUsers className="text-warning text-4xl mx-auto mb-4 opacity-50" />
-          <h2 className="text-xl font-semibold mb-2">No communities found</h2>
-          <p className="text-default-500">
+        <div className="text-center py-12 sm:py-16">
+          <LuUsers className="text-warning text-3xl sm:text-4xl mx-auto mb-4 opacity-50" />
+          <h2 className="text-lg sm:text-xl font-semibold mb-2">No communities found</h2>
+          <p className="text-sm text-default-500">
             {searchQuery
               ? "Try adjusting your search query"
               : selectedTab === "joined"
@@ -403,6 +406,7 @@ export default function CommunitiesPage() {
               color="warning"
               variant="flat"
               className="mt-4"
+              size="sm"
               onClick={() => setSelectedTab("discover")}
             >
               Discover Communities
@@ -415,13 +419,13 @@ export default function CommunitiesPage() {
       {selectedTab === "discover" &&
         !loading &&
         filteredCommunities.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+          <div className="mt-12 sm:mt-16">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
               <LuStar className="text-warning" />
               Trending Communities
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {dummyCommunities
                 .sort((a, b) => b.members - a.members)
                 .slice(0, 3)
@@ -430,16 +434,16 @@ export default function CommunitiesPage() {
                     key={`trending-${community.id}`}
                     className="shadow-md hover:shadow-lg transition-shadow"
                   >
-                    <CardBody className="flex items-center gap-4">
+                    <CardBody className="flex items-center gap-3 sm:gap-4">
                       <Avatar
                         src={community.logo}
-                        size="lg"
+                        size="md"
+                        className="sm:size-lg"
                         radius="lg"
-                        className="flex-shrink-0"
                       />
                       <div className="flex-grow">
                         <div className="flex items-center gap-1">
-                          <p className="font-semibold">{community.name}</p>
+                          <p className="text-sm sm:text-base font-semibold">{community.name}</p>
                           {community.isVerified && (
                             <LuShield
                               className="text-warning"
@@ -482,17 +486,16 @@ export default function CommunitiesPage() {
       {selectedTab === "joined" &&
         !loading &&
         filteredCommunities.length > 0 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+          <div className="mt-12 sm:mt-16">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
               <LuMessageSquare className="text-warning" />
               Recently Active
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {filteredCommunities
                 .filter((community) => community.isJoined)
                 .sort((a, b) => {
-                  // Sort by activity level and then by last active time
                   if (a.activity === b.activity) {
                     return a.lastActive.localeCompare(b.lastActive);
                   }
@@ -506,15 +509,15 @@ export default function CommunitiesPage() {
                   >
                     <CardBody>
                       <div className="flex items-center gap-3 mb-3">
-                        <Avatar src={community.logo} size="md" radius="lg" />
+                        <Avatar src={community.logo} size="sm" className="sm:size-md" radius="lg" />
                         <div>
-                          <p className="font-semibold">{community.name}</p>
+                          <p className="text-sm sm:text-base font-semibold">{community.name}</p>
                           <p className="text-xs text-default-500">
                             Last active: {community.lastActive}
                           </p>
                         </div>
                       </div>
-                      <p className="text-sm mb-3">
+                      <p className="text-xs sm:text-sm mb-3">
                         New discussions about {community.tags.join(", ")} are
                         waiting for your input!
                       </p>
@@ -537,38 +540,39 @@ export default function CommunitiesPage() {
 
       {/* Upcoming Events Preview (only on discover tab) */}
       {selectedTab === "discover" && !loading && events.length > 0 && (
-        <div className="mt-16">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold flex items-center gap-2">
+        <div className="mt-12 sm:mt-16">
+          <div className="flex flex-col sm:flex-row items-center justify-between mb-4 sm:mb-6 gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2">
               <LuCalendar className="text-warning" />
               Upcoming Events
             </h2>
             <Button
               variant="light"
               color="warning"
+              size="sm"
               onClick={() => setSelectedTab("events")}
             >
               View All
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {events.slice(0, 2).map((event) => (
               <Card
                 key={`event-preview-${event.id}`}
                 className="shadow-md hover:shadow-lg transition-shadow"
               >
                 <CardBody>
-                  <h3 className="font-semibold mb-2">{event.title}</h3>
+                  <h3 className="text-sm sm:text-base font-semibold mb-2">{event.title}</h3>
                   <div className="flex items-center gap-2 mb-2">
                     <LuCalendar className="text-warning" />
-                    <span className="text-sm">
+                    <span className="text-xs sm:text-sm">
                       {formatEventDate(event.date)}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 mb-3">
                     <LuUsers className="text-warning" />
-                    <span className="text-sm">{event.attendees} attending</span>
+                    <span className="text-xs sm:text-sm">{event.attendees} attending</span>
                   </div>
                   <Button color="warning" variant="flat" size="sm" fullWidth>
                     RSVP

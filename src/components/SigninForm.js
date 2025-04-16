@@ -110,137 +110,144 @@ export default function SigninForm() {
   };
 
   return (
-    <Card className="max-w-md mx-auto p-4">
-      <CardHeader className="flex flex-col items-center pb-0">
-        <h1 className="text-2xl font-bold text-warning">Welcome Back!</h1>
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={humorLine}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="text-sm text-center text-foreground/70 mt-2"
-          >
-            {humorLine.split("").map((char, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, delay: index * 0.03 }}
+    <div className="w-full px-4 sm:px-6 md:px-8 ">
+      <Card className="w-full max-w-md mx-auto p-3 sm:p-4">
+        <CardHeader className="flex flex-col items-center pb-0">
+          <h1 className="text-xl sm:text-2xl font-bold text-warning">Welcome Back!</h1>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={humorLine}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="text-xs sm:text-sm text-center text-foreground/70 mt-2"
+            >
+              {humorLine.split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, delay: index * 0.03 }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </motion.p>
+          </AnimatePresence>
+        </CardHeader>
+        <CardBody>
+          <div className="mt-3 sm:mt-4 space-y-3 sm:space-y-4">
+            <p className="font-semibold text-warning">Continue With</p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:space-x-4">
+              <Button
+                fullWidth
+                variant="flat"
+                onClick={() => handleOAuthSignIn("google")}
+                startContent={<FcGoogle className="text-lg sm:text-xl" />}
+                className="font-medium"
               >
-                {char}
-              </motion.span>
-            ))}
-          </motion.p>
-        </AnimatePresence>
-      </CardHeader>
-      <CardBody>
-        <div className="mt-4 space-y-4">
-          <p className="font-semibold text-warning">Continue With</p>
-          <div className="flex space-x-4">
-            <Button
-              fullWidth
-              variant="flat"
-              onClick={() => handleOAuthSignIn("google")}
-              startContent={<FcGoogle className="text-xl" />}
-              className="font-medium"
-            >
-              Google
-            </Button>
-            <Button
-              fullWidth
-              variant="flat"
-              onClick={() => handleOAuthSignIn("github")}
-              startContent={<LuGithub className="text-xl" />}
-              className="font-medium"
-            >
-              GitHub
-            </Button>
+                Google
+              </Button>
+              <Button
+                fullWidth
+                variant="flat"
+                onClick={() => handleOAuthSignIn("github")}
+                startContent={<LuGithub className="text-lg sm:text-xl" />}
+                className="font-medium"
+              >
+                GitHub
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="relative">
-          <Divider className="my-8" />
-          <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-content1 px-2 text-sm text-foreground/50">
-            Or
-          </span>
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input
-            type="email"
-            label="Email address"
-            placeholder="Enter your email"
-            {...register("email")}
-            isInvalid={!!errors.email}
-            errorMessage={errors.email?.message}
-            startContent={
-              <LuAtSign className="text-default-400 pointer-events-none flex-shrink-0" />
-            }
-            classNames={{ inputWrapper: "border border-default-200" }}
-            autoComplete="email"
-          />
-          <Input
-            type={passwordVisible ? "text" : "password"}
-            label="Password"
-            placeholder="Enter your password"
-            {...register("password")}
-            isInvalid={!!errors.password}
-            errorMessage={errors.password?.message}
-            startContent={
-              <LuLock className="text-default-400 pointer-events-none flex-shrink-0" />
-            }
-            endContent={
-              <button
-                type="button"
-                onClick={() => setPasswordVisible(!passwordVisible)}
-                className="focus:outline-none"
-                aria-label={passwordVisible ? "Hide password" : "Show password"}
+          <div className="relative">
+            <Divider className="my-6 sm:my-8" />
+            <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-content1 px-2 text-xs sm:text-sm text-foreground/50">
+              Or
+            </span>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
+            <Input
+              type="email"
+              label="Email address"
+              placeholder="Enter your email"
+              {...register("email")}
+              isInvalid={!!errors.email}
+              errorMessage={errors.email?.message}
+              startContent={
+                <LuAtSign className="text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              classNames={{ inputWrapper: "border border-default-200" }}
+              autoComplete="email"
+              size="sm"
+              className="text-sm sm:text-base"
+            />
+            <Input
+              type={passwordVisible ? "text" : "password"}
+              label="Password"
+              placeholder="Enter your password"
+              {...register("password")}
+              isInvalid={!!errors.password}
+              errorMessage={errors.password?.message}
+              startContent={
+                <LuLock className="text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              endContent={
+                <button
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                  className="focus:outline-none"
+                  aria-label={passwordVisible ? "Hide password" : "Show password"}
+                >
+                  {passwordVisible ? (
+                    <LuCircleHelp className="text-default-400" />
+                  ) : (
+                    <LuCircleHelp className="text-default-400" />
+                  )}
+                </button>
+              }
+              classNames={{ inputWrapper: "border border-default-200" }}
+              autoComplete="current-password"
+              size="sm"
+              className="text-sm sm:text-base"
+            />
+            <div className="flex justify-end">
+              <Link
+                href="/forgot-password"
+                className="text-xs sm:text-sm text-warning hover:underline"
               >
-                {passwordVisible ? (
-                  <LuCircleHelp className="text-default-400" />
-                ) : (
-                  <LuCircleHelp className="text-default-400" />
-                )}
-              </button>
-            }
-            classNames={{ inputWrapper: "border border-default-200" }}
-            autoComplete="current-password"
-          />
-          <div className="flex justify-end">
-            <Link
-              href="/forgot-password"
-              className="text-sm text-warning hover:underline"
+                Forgot password?
+              </Link>
+            </div>
+            <Button
+              type="submit"
+              color="warning"
+              className="text-primary"
+              isDisabled={!isValid || loading}
+              isLoading={loading}
+              fullWidth
+              size="md"
             >
-              Forgot password?
+              {loading ? (
+                <Spinner size="sm" color="white" />
+              ) : (
+                <>
+                  Sign In <LuLogIn className="ml-2" />
+                </>
+              )}
+            </Button>
+          </form>
+          <div className="mt-3 sm:mt-4 text-center">
+            <span className="text-xs sm:text-sm text-foreground/70">
+              Don't have an account?{" "}
+            </span>
+            <Link href="/signup" className="text-xs sm:text-sm text-warning hover:underline">
+              Sign up
             </Link>
           </div>
-          <Button
-            type="submit"
-            color="warning"
-            className="text-primary"
-            isDisabled={!isValid || loading}
-            isLoading={loading}
-            fullWidth
-          >
-            {loading ? (
-              <Spinner size="sm" color="white" />
-            ) : (
-              <>
-                Sign In <LuLogIn className="ml-2" />
-              </>
-            )}
-          </Button>
-        </form>
-        <div className="mt-4 text-center">
-          <span className="text-sm text-foreground/70">
-            Don't have an account?{" "}
-          </span>
-          <Link href="/signup" className="text-sm text-warning hover:underline">
-            Sign up
-          </Link>
-        </div>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </div>
   );
 }

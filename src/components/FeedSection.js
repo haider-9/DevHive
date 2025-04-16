@@ -33,7 +33,7 @@ const FeedSection = () => {
 
   if (loading) {
     return (
-      <section className="p-8 flex justify-center items-center min-h-[300px]">
+      <section className="p-4 md:p-8 flex justify-center items-center min-h-[300px]">
         <div className="animate-pulse text-foreground">Loading posts...</div>
       </section>
     );
@@ -41,7 +41,7 @@ const FeedSection = () => {
 
   if (error) {
     return (
-      <section className="p-8 flex justify-center items-center min-h-[300px]">
+      <section className="p-4 md:p-8 flex justify-center items-center min-h-[300px]">
         <div className="text-danger">{error}</div>
       </section>
     );
@@ -49,33 +49,36 @@ const FeedSection = () => {
 
   if (posts.length === 0) {
     return (
-      <section className="p-8 flex justify-center items-center min-h-[300px]">
+      <section className="p-4 md:p-8 flex justify-center items-center min-h-[300px]">
         <div className="text-foreground-500">
           No posts found. Be the first to create a post!
         </div>
       </section>
     );
   }
+  console.log(posts.authorId)
 
   return (
-    <section className="p-8 flex flex-wrap gap-6  *:flex-1 m-4">
-      {posts.map((post) => (
-        <Card
-          key={post.$id}
-         
-          profileImage={post.authorAvatar || "https://github.com/github.png"}
-          username={post.authorName || "Anonymous"}
-          postHeading={post.title}
-          description={
-            post.description || post.content?.substring(0, 100) || ""
-          }
-          hashtags={post.tags || []}
-          postImage={post.coverImageUrl || null}
-          createdAt={post.$createdAt}
-          likeCount={post.likeCount || 0}
-          postId={post.$id}
-        />
-      ))}
+    <section>
+      <div className="flex items-center flex-col gap-4 md:gap-0 lg:flex-row">
+        {posts.map((post) => (
+          <Card
+            key={post.$id}
+            profileImage={post.authorAvatar || "https://github.com/github.png"}
+            username={post.authorName || "Anonymous"}
+            postHeading={post.title}
+            description={
+              post.description || post.content?.substring(0, 100) || ""
+            }
+            hashtags={post.tags || []}
+            postImage={post.coverImageUrl || null}
+            createdAt={post.$createdAt}
+            likeCount={post.likeCount || 0}
+            postId={post.$id}
+            userId={post.authorId}
+          />
+        ))}
+      </div>
     </section>
   );
 };

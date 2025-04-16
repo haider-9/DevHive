@@ -149,11 +149,11 @@ export default function BookmarksPage() {
 
   if (!user && !loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <div className="bg-secondary p-8 rounded-2xl shadow-lg">
-          <LuInfo className="text-warning text-5xl mx-auto mb-4" />
-          <h1 className="text-2xl font-bold mb-4">Sign In to View Your Bookmarks</h1>
-          <p className="text-default-500 mb-6">
+      <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12 md:py-16">
+        <div className="bg-secondary p-4 sm:p-6 md:p-8 rounded-2xl shadow-lg">
+          <LuInfo className="text-warning text-3xl sm:text-4xl md:text-5xl mx-auto mb-3 sm:mb-4" />
+          <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Sign In to View Your Bookmarks</h1>
+          <p className="text-default-500 mb-4 sm:mb-6 text-sm sm:text-base">
             You need to be signed in to save and view your bookmarked posts.
           </p>
           <Button
@@ -161,7 +161,7 @@ export default function BookmarksPage() {
             href="/signin"
             color="warning"
             size="lg"
-            className="font-semibold"
+            className="font-semibold w-full sm:w-auto"
           >
             Sign In
           </Button>
@@ -171,18 +171,18 @@ export default function BookmarksPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <LuBookmark className="text-warning text-3xl" />
-          <h1 className="text-3xl font-bold">Your Bookmarks</h1>
+    <div className="max-w-4xl mx-auto px-4 py-4 sm:py-6 md:py-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <LuBookmark className="text-warning text-2xl sm:text-3xl" />
+          <h1 className="text-2xl sm:text-3xl font-bold">Your Bookmarks</h1>
         </div>
       </div>
 
       <Tabs 
         selectedKey={selectedTab} 
         onSelectionChange={setSelectedTab}
-        className="mb-6"
+        className="mb-4 sm:mb-6"
       >
         <Tab key="all" title="All Bookmarks" />
         <Tab key="readingLists" title="Reading Lists" />
@@ -190,7 +190,7 @@ export default function BookmarksPage() {
 
       {selectedTab === "all" ? (
         <>
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="flex flex-col gap-3 mb-4 sm:mb-6">
             <Input
               placeholder="Search in your bookmarks..."
               value={searchQuery}
@@ -198,43 +198,46 @@ export default function BookmarksPage() {
               startContent={<LuSearch />}
               clearable
               onClear={() => setSearchQuery("")}
-              className="flex-grow"
+              className="w-full"
             />
             
-            <Dropdown>
-              <DropdownTrigger>
-                <Button 
-                  variant="flat" 
-                  color="default"
-                  startContent={<LuFilter />}
-                >
-                  Filter
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Filter options" closeOnSelect={false}>
-                <DropdownItem key="tags" isReadOnly className="font-bold">
-                  Filter by Tags
-                </DropdownItem>
-                {allTags.map(tag => (
-                  <DropdownItem 
-                    key={tag} 
-                    startContent={
-                      <input 
-                        type="checkbox" 
-                        checked={selectedTags.includes(tag)}
-                        onChange={() => toggleTag(tag)}
-                        className="mr-2"
-                      />
-                    }
+            <div className="flex justify-end">
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button 
+                    variant="flat" 
+                    color="default"
+                    startContent={<LuFilter />}
+                    className="w-full sm:w-auto"
                   >
-                    {tag}
+                    Filter
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Filter options" closeOnSelect={false}>
+                  <DropdownItem key="tags" isReadOnly className="font-bold">
+                    Filter by Tags
                   </DropdownItem>
-                ))}
-                <DropdownItem key="clear" className="text-danger" onClick={clearFilters}>
-                  Clear Filters
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+                  {allTags.map(tag => (
+                    <DropdownItem 
+                      key={tag} 
+                      startContent={
+                        <input 
+                          type="checkbox" 
+                          checked={selectedTags.includes(tag)}
+                          onChange={() => toggleTag(tag)}
+                          className="mr-2"
+                        />
+                      }
+                    >
+                      {tag}
+                    </DropdownItem>
+                  ))}
+                  <DropdownItem key="clear" className="text-danger" onClick={clearFilters}>
+                    Clear Filters
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
           </div>
 
           {selectedTags.length > 0 && (
@@ -245,6 +248,7 @@ export default function BookmarksPage() {
                   onClose={() => toggleTag(tag)}
                   variant="flat"
                   color="warning"
+                  size="sm"
                 >
                   {tag}
                 </Chip>
@@ -262,11 +266,11 @@ export default function BookmarksPage() {
           )}
 
           {loading ? (
-            <div className="flex justify-center items-center h-64">
+            <div className="flex justify-center items-center h-48 sm:h-64">
               <Spinner size="lg" color="warning" />
             </div>
           ) : filteredPosts.length > 0 ? (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {filteredPosts.map((post) => (
                 <PostCard
                   key={post.postId}
@@ -283,10 +287,10 @@ export default function BookmarksPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <LuBookmark className="text-warning text-4xl mx-auto mb-4 opacity-50" />
-              <h2 className="text-xl font-semibold mb-2">No bookmarks found</h2>
-              <p className="text-default-500">
+            <div className="text-center py-8 sm:py-16">
+              <LuBookmark className="text-warning text-3xl sm:text-4xl mx-auto mb-3 sm:mb-4 opacity-50" />
+              <h2 className="text-lg sm:text-xl font-semibold mb-2">No bookmarks found</h2>
+              <p className="text-default-500 text-sm sm:text-base">
                 {searchQuery || selectedTags.length > 0 
                   ? "Try adjusting your search or filters" 
                   : "Start bookmarking posts to save them for later"}
@@ -295,29 +299,29 @@ export default function BookmarksPage() {
           )}
         </>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {readingLists.map(list => (
             <Button
               key={list.id}
               as={Link}
               href={`/bookmarks/list/${list.id}`}
               variant="flat"
-              className="h-auto p-4 justify-start text-left"
+              className="h-auto p-3 sm:p-4 justify-start text-left"
             >
               <div>
-                <h3 className="font-semibold text-lg">{list.name}</h3>
-                <p className="text-default-500 text-sm">{list.count} items</p>
+                <h3 className="font-semibold text-base sm:text-lg">{list.name}</h3>
+                <p className="text-default-500 text-xs sm:text-sm">{list.count} items</p>
               </div>
             </Button>
           ))}
           <Button
             color="warning"
             variant="flat"
-            className="h-auto p-4 justify-center items-center border-2 border-dashed border-warning/30"
+            className="h-auto p-3 sm:p-4 justify-center items-center border-2 border-dashed border-warning/30"
           >
             <div className="text-center">
-              <span className="block text-2xl mb-1">+</span>
-              <span>Create New List</span>
+              <span className="block text-xl sm:text-2xl mb-1">+</span>
+              <span className="text-sm sm:text-base">Create New List</span>
             </div>
           </Button>
         </div>

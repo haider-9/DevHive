@@ -121,8 +121,8 @@ const ProfilePage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-      <Spinner size="lg" color="warning" />
-    </div>
+        <Spinner size="lg" color="warning" />
+      </div>
     );
   }
 
@@ -272,6 +272,7 @@ const ProfilePage = () => {
                 createdAt={post.$createdAt}
                 likeCount={post.likeCount || 0}
                 postId={post.$id}
+                userId={user?.$id}
               />
             ))}
           </div>

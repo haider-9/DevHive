@@ -118,10 +118,10 @@ export default function TrendingPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 sm:gap-0">
         <div className="flex items-center gap-3">
-          <LuTrendingUp className="text-warning text-3xl" />
-          <h1 className="text-3xl font-bold">Trending on DevHive</h1>
+          <LuTrendingUp className="text-warning text-2xl sm:text-3xl" />
+          <h1 className="text-2xl sm:text-3xl font-bold">Trending on DevHive</h1>
         </div>
         
         <Dropdown>
@@ -130,6 +130,7 @@ export default function TrendingPage() {
               variant="flat" 
               color="warning"
               endContent={<LuCalendar />}
+              className="w-full sm:w-auto"
             >
               {timeframe === "week" ? "This Week" : 
                timeframe === "month" ? "This Month" : "This Year"}
@@ -153,7 +154,7 @@ export default function TrendingPage() {
           <Spinner size="lg" color="warning" />
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="flex items-center flex-col lg:flex-row">
           {posts.map((post) => (
             <PostCard
               key={post.postId}

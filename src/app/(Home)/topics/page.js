@@ -129,7 +129,7 @@ export default function TopicsPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
         <div className="flex items-center gap-3">
           <LuTag className="text-warning text-3xl" />
           <h1 className="text-3xl font-bold">Topics</h1>
@@ -166,17 +166,17 @@ export default function TopicsPage() {
           {filteredTopics.map(topic => (
             <Card key={topic.id} className="shadow-md hover:shadow-lg transition-shadow">
               <CardBody>
-                <div className="flex items-start gap-4">
+                <div className="flex flex-col sm:flex-row items-start gap-4">
                   <Avatar
                     src={topic.icon}
                     size="lg"
                     radius="lg"
-                    className="flex-shrink-0"
+                    className="flex-shrink-0 mx-auto sm:mx-0"
                   />
-                  <div className="flex-grow">
-                    <div className="flex items-center justify-between">
+                  <div className="flex-grow w-full">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-2">
                       <Link href={`/topics/${topic.name.toLowerCase()}`}>
-                        <h3 className="font-bold text-lg hover:text-warning transition-colors">
+                        <h3 className="font-bold text-lg hover:text-warning transition-colors text-center sm:text-left">
                           {topic.name}
                         </h3>
                       </Link>
@@ -191,13 +191,13 @@ export default function TopicsPage() {
                         </Chip>
                       )}
                     </div>
-                    <p className="text-sm mt-1 text-default-500">
+                    <p className="text-sm mt-1 text-default-500 text-center sm:text-left">
                       {topic.followersCount.toLocaleString()} followers • {topic.postsCount.toLocaleString()} posts
                     </p>
-                    <p className="text-sm mt-2 text-default-600">
+                    <p className="text-sm mt-2 text-default-600 text-center sm:text-left">
                       {topic.description}
                     </p>
-                    <div className="flex flex-wrap gap-2 mt-3">
+                    <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-3">
                       {topic.relatedTopics.map(relatedTopic => (
                         <Link 
                           key={relatedTopic} 
@@ -214,7 +214,7 @@ export default function TopicsPage() {
                         </Link>
                       ))}
                     </div>
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-center sm:justify-end">
                       <Button
                         color={topic.isFollowing ? "default" : "warning"}
                         variant={topic.isFollowing ? "bordered" : "solid"}
@@ -263,7 +263,7 @@ export default function TopicsPage() {
             Trending Topics
           </h2>
           
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap justify-center sm:justify-start gap-3">
             {topics
               .filter(topic => topic.trending)
               .map(topic => (
@@ -285,5 +285,4 @@ export default function TopicsPage() {
         </div>
       )}
     </div>
-  );
-}
+  );}

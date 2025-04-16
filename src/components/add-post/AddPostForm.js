@@ -135,24 +135,23 @@ const AddPostForm = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-      <Spinner size="lg" color="warning" />
-    </div>
+        <Spinner size="lg" color="warning" />
+      </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <Toaster position="top-center" />
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
       
       {/* Cover Image */}
-      <div className="space-y-2">
-        <label className="block text-lg font-medium">Cover Image</label>
+      <div className="space-y-1 sm:space-y-2">
+        <label className="block text-base sm:text-lg font-medium">Cover Image</label>
         <div 
-          className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors"
+          className="border-2 border-dashed border-gray-300 rounded-lg p-3 sm:p-4 text-center cursor-pointer hover:bg-gray-50 transition-colors"
           onClick={() => document.getElementById('cover-image').click()}
         >
           {imagePreview ? (
-            <div className="relative h-48 w-full">
+            <div className="relative h-32 sm:h-40 md:h-48 w-full">
               <img 
                 src={imagePreview} 
                 alt="Cover preview" 
@@ -167,17 +166,17 @@ const AddPostForm = () => {
                 }}
                 className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </button>
             </div>
           ) : (
-            <div className="py-8">
-              <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="py-4 sm:py-6 md:py-8">
+              <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <p className="mt-2 text-sm text-gray-500">Click to upload a cover image</p>
+              <p className="mt-2 text-xs sm:text-sm text-gray-500">Click to upload a cover image</p>
             </div>
           )}
           <input
@@ -191,8 +190,8 @@ const AddPostForm = () => {
       </div>
 
       {/* Title */}
-      <div className="space-y-2">
-        <label htmlFor="title" className="block text-lg font-medium">
+      <div className="space-y-1 sm:space-y-2">
+        <label htmlFor="title" className="block text-base sm:text-lg font-medium">
           Title
         </label>
         <input
@@ -202,14 +201,14 @@ const AddPostForm = () => {
           value={postData.title}
           onChange={handleChange}
           placeholder="Enter a descriptive title"
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning"
+          className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning"
           required
         />
       </div>
 
       {/* Content */}
-      <div className="space-y-2">
-        <label htmlFor="content" className="block text-lg font-medium">
+      <div className="space-y-1 sm:space-y-2">
+        <label htmlFor="content" className="block text-base sm:text-lg font-medium">
           Content
         </label>
         <textarea
@@ -218,28 +217,28 @@ const AddPostForm = () => {
           value={postData.content}
           onChange={handleChange}
           placeholder="Write your post content here..."
-          rows="10"
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning"
+          rows={8}
+          className="w-full px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning"
           required
         ></textarea>
       </div>
 
       {/* Tags */}
-      <div className="space-y-2">
-        <label className="block text-lg font-medium">
+      <div className="space-y-1 sm:space-y-2">
+        <label className="block text-base sm:text-lg font-medium">
           Tags
         </label>
-        <div className="flex flex-wrap gap-2 mb-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
           {postData.tags.map((tag, index) => (
             <div
               key={index}
-              className="bg-warning bg-opacity-20 text-warning px-3 py-1 rounded-full flex items-center"
+              className="bg-warning bg-opacity-20 text-warning px-2 sm:px-3 py-0.5 sm:py-1 rounded-full flex items-center text-xs sm:text-sm"
             >
               {tag}
               <button
                 type="button"
                 onClick={() => removeTag(tag)}
-                className="ml-2 text-warning hover:text-danger"
+                className="ml-1 sm:ml-2 text-warning hover:text-danger"
               >
                 &times;
               </button>
@@ -251,8 +250,8 @@ const AddPostForm = () => {
             type="text"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning"
-            placeholder="Add a tag (e.g., JavaScript, React, Tutorial)"
+            className="flex-1 px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning"
+            placeholder="Add a tag (e.g., JavaScript, React)"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault();
@@ -263,7 +262,7 @@ const AddPostForm = () => {
           <button
             type="button"
             onClick={addTag}
-            className="bg-warning hover:bg-warning-dark text-white px-4 py-2 rounded-r-md transition-colors"
+            className="bg-warning hover:bg-warning-dark text-white px-2 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base rounded-r-md transition-colors"
           >
             Add
           </button>
@@ -271,15 +270,15 @@ const AddPostForm = () => {
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2 sm:pt-4">
         <button
           type="submit"
           disabled={submitting}
-          className="px-6 py-2 bg-warning text-white rounded-md hover:bg-warning-dark disabled:opacity-50 transition-colors flex items-center"
+          className="px-4 sm:px-6 py-1.5 sm:py-2 bg-warning text-white rounded-md hover:bg-warning-dark disabled:opacity-50 transition-colors flex items-center text-sm sm:text-base"
         >
           {submitting ? (
             <>
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin -ml-1 mr-2 h-3 w-3 sm:h-4 sm:w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
