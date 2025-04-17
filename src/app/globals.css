@@ -10,8 +10,8 @@ body {
 
 /* Selection Styles */
 ::selection {
-    background-color: theme('colors.primary');
-    color: theme('colors.foreground');
+    background-color: theme('colors.foreground');
+    color: theme('colors.primary');
 }
 
 /* Scrollbar Styles */

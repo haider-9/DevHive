@@ -119,16 +119,19 @@ const PostCard = ({
             </Link>
           ))}
         </div>
-        {postImage && (
-          <div className="mt-2 h-[150px] w-full">
-            <img
-              alt="Post image"
-              className="h-full w-full object-cover rounded-md"
-              src={postImage}
-            />
-          </div>
-        )}
       </CardBody>
+      
+      {/* Image section moved to between CardBody and CardFooter */}
+      {postImage && (
+        <div className="w-full px-3 sm:px-4 mb-2">
+          <img
+            alt="Post image"
+            className="w-full h-[250px] object-cover object-center rounded-md"
+            src={postImage}
+          />
+        </div>
+      )}
+      
       <CardFooter className="flex justify-between gap-2 sm:gap-3 p-3 sm:p-4 mt-auto">
         <ButtonGroup size="sm">
           <Button

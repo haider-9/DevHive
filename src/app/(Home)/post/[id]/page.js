@@ -184,7 +184,7 @@ export default function PostDetailPage({ params }) {
 
             {/* Post image if available */}
             {post.coverImageUrl && (
-              <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-lg">
+              <div className="relative w-full h-fit overflow-hidden rounded-lg">
                 <img
                   src={post.coverImageUrl}
                   alt={post.title}
